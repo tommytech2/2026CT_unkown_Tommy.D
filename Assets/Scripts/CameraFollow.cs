@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SmoothPlayerController : MonoBehaviour
+public class Cinemachine : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 8f;
