@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Cinemachine : MonoBehaviour
 {
@@ -13,6 +15,16 @@ public class Cinemachine : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Dashing")]
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingpower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
+    [SerializeField] private TrailRenderer tr;
+
+
     private Rigidbody2D rb;
     private float moveInput;
     private float currentVelocityX;
@@ -25,6 +37,13 @@ public class Cinemachine : MonoBehaviour
 
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
+
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         
@@ -34,11 +53,26 @@ public class Cinemachine : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
+
+    if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+    {
+        StartCoroutine(Dash());
+
     }
+    }
+
+   
+
 
     void FixedUpdate()
     {
         
+         if (isDashing)
+        {
+            return;
+        }
+
+
         float targetSpeed = moveInput * moveSpeed;
 
         if (Mathf.Abs(moveInput) > 0.1f)
@@ -54,4 +88,26 @@ public class Cinemachine : MonoBehaviour
 
         rb.linearVelocity = new Vector2(currentVelocityX, rb.linearVelocity.y);
     }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(transform.localScale.x * dashingpower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+
+
+
+    }
+
 }
+
+
