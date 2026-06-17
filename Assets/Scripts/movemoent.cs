@@ -49,7 +49,7 @@ public class Cinemachine : MonoBehaviour
         
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if (Input.GetButtonDown(KeyCode.SpaceBar) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
@@ -95,7 +95,7 @@ public class Cinemachine : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(transform.localScale.x * dashingpower, 0f);
+       rb.linearVelocity = new Vector2(moveInput * dashingpower, 0f);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
