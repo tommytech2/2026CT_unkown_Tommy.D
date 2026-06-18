@@ -24,6 +24,24 @@ public class Cinemachine : MonoBehaviour
 
     [SerializeField] private TrailRenderer tr;
 
+  
+    [Header("Wall Sliding")]
+    public Transform wallCheck;
+    public float wallCheckDistance = 0.5f;
+    public LayerMask wallLayer;
+    public float wallSlideSpeed = 2f;
+    public Transform wallCheckLeft;
+    private bool touchingRightWall;
+    private bool touchingLeftWall;
+
+
+    [Header("Wall Jumping")]
+    public float wallJumpForce = 14f;
+    public Vector2 wallJumpDirection = new Vector2(1f, 1.5f);
+    private bool isWallSliding;
+    private bool isTouchingWall;
+    private bool isWallJumping;
+  
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -37,16 +55,11 @@ public class Cinemachine : MonoBehaviour
 
     void Update()
     {
-        if (isDashing)
-        {
-            return;
-        }
-
-
+        if (isDashing) return;
+    if (isWallJumping) return;
 
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -54,39 +67,72 @@ public class Cinemachine : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-    if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
-    {
-        StartCoroutine(Dash());
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
 
+        
+         touchingRightWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+         touchingLeftWall = Physics2D.OverlapCircle(wallCheckLeft.position, 0.2f, wallLayer);
+
+        isTouchingWall = touchingRightWall || touchingLeftWall;
+        
+        if (isTouchingWall && !isGrounded && moveInput != 0)
+        {
+            isWallSliding = true;
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+
+      
+        if (Input.GetKeyDown(KeyCode.Space) && isWallSliding)
+        {
+            isWallJumping = true;
+            Invoke(nameof(StopWallJump), 0.2f);
+        }
     }
-    }
-
-   
-
 
     void FixedUpdate()
     {
-        
-         if (isDashing)
+        if (isDashing)
         {
             return;
         }
-
 
         float targetSpeed = moveInput * moveSpeed;
 
         if (Mathf.Abs(moveInput) > 0.1f)
         {
-            
             currentVelocityX = Mathf.Lerp(rb.linearVelocity.x, targetSpeed, acceleration * Time.fixedDeltaTime);
         }
         else
         {
-            
             currentVelocityX = Mathf.Lerp(rb.linearVelocity.x, 0, deceleration * Time.fixedDeltaTime);
         }
 
         rb.linearVelocity = new Vector2(currentVelocityX, rb.linearVelocity.y);
+
+        
+        if (isWallSliding)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
+        }
+
+       
+  if (isWallJumping)
+    {
+        float jumpDir = (moveInput > 0) ? -1 : 1;
+
+        rb.linearVelocity = new Vector2(
+            wallJumpDirection.x * jumpDir * wallJumpForce,
+            wallJumpDirection.y * wallJumpForce
+        );
+    }
+
+
     }
 
     private IEnumerator Dash()
@@ -95,7 +141,7 @@ public class Cinemachine : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-       rb.linearVelocity = new Vector2(moveInput * dashingpower, 0f);
+        rb.linearVelocity = new Vector2(moveInput * dashingpower, 0f);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
@@ -103,11 +149,12 @@ public class Cinemachine : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-
-
-
     }
 
+ 
+    
+    private void StopWallJump()
+    {
+        isWallJumping = false;
+    }
 }
-
-
