@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        float speed = Mathf.Abs(rb.linearVelocity.x);
-        animator.SetFloat("speed", speed);
+        bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+        animator.SetBool("isRunning", isRunning);
     }
 }

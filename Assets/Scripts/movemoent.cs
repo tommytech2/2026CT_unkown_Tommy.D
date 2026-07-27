@@ -23,6 +23,7 @@ public class Cinemachine : MonoBehaviour
     private float dashingCooldown = 1f;
 
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private Animator animator;
 
   
     [Header("Wall Sliding")]
@@ -62,11 +63,24 @@ public class Cinemachine : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
+    if(Input !=0){
+            animator.SetBool("isRunning", true);
+         }
+         else{
+             animator.SetBool("isRunning", false);
+            }
+     
+
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
+
+ 
+     
+     
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
@@ -149,6 +163,8 @@ public class Cinemachine : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+
+      
     }
 
  
