@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Cinemachine : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 8f;
@@ -56,20 +56,18 @@ public class Cinemachine : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) return;
-    if (isWallJumping) return;
-
+   
+        animator.SetBool("isRunning", moveInput != 0);
+     
         moveInput = Input.GetAxisRaw("Horizontal");
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-    if(Input !=0){
-            animator.SetBool("isRunning", true);
-         }
-         else{
-             animator.SetBool("isRunning", false);
-            }
-     
+  
+
+
+     if (isDashing) return;
+    if (isWallJumping) return;
 
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
