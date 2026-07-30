@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,7 +24,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private Animator animator;
 
-  
+    [Header("Graphics (Sprite Child)")]
+    [SerializeField] private Transform graphics;
+
     [Header("Wall Sliding")]
     public Transform wallCheck;
     public float wallCheckDistance = 0.5f;
@@ -35,14 +36,12 @@ public class PlayerMovement : MonoBehaviour
     private bool touchingRightWall;
     private bool touchingLeftWall;
 
-
     [Header("Wall Jumping")]
     public float wallJumpForce = 14f;
     public Vector2 wallJumpDirection = new Vector2(1f, 1.5f);
     private bool isWallSliding;
     private bool isTouchingWall;
     private bool isWallJumping;
-  
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -56,40 +55,55 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-   
-        animator.SetBool("isRunning", moveInput != 0);
-     
         moveInput = Input.GetAxisRaw("Horizontal");
 
+        // ⭐ FLIP ONLY THE GRAPHICS OBJECT ⭐
+        if (moveInput > 0)
+        {
+            graphics.localScale = new Vector3(
+                Mathf.Abs(graphics.localScale.x),
+                graphics.localScale.y,
+                graphics.localScale.z
+            );
+        }
+        else if (moveInput < 0)
+        {
+            graphics.localScale = new Vector3(
+                -Mathf.Abs(graphics.localScale.x),
+                graphics.localScale.y,
+                graphics.localScale.z
+            );
+        }
+
+        // ⭐ Animator
+        animator.SetBool("isRunning", moveInput != 0);
+
+        // ⭐ Ground Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-  
+        // ⭐ DO NOT RETURN BEFORE INPUT HANDLING
+        if (isDashing) return;
+        if (isWallJumping) return;
 
-
-     if (isDashing) return;
-    if (isWallJumping) return;
-
-
+        // ⭐ Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-
- 
-     
-     
+        // ⭐ Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
 
-        
-         touchingRightWall = Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-         touchingLeftWall = Physics2D.OverlapCircle(wallCheckLeft.position, 0.2f, wallLayer);
+        // ⭐ Wall Checks
+        touchingRightWall = Physics2D.OverlapCircle(wallCheck.position, 0.3f, wallLayer);
+        touchingLeftWall = Physics2D.OverlapCircle(wallCheckLeft.position, 0.3f, wallLayer);
 
         isTouchingWall = touchingRightWall || touchingLeftWall;
-        
+
+        // ⭐ Wall Slide
         if (isTouchingWall && !isGrounded && moveInput != 0)
         {
             isWallSliding = true;
@@ -99,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
         }
 
-      
+        // ⭐ Wall Jump
         if (Input.GetKeyDown(KeyCode.Space) && isWallSliding)
         {
             isWallJumping = true;
@@ -127,24 +141,22 @@ public class PlayerMovement : MonoBehaviour
 
         rb.linearVelocity = new Vector2(currentVelocityX, rb.linearVelocity.y);
 
-        
+        // ⭐ Wall Slide Physics
         if (isWallSliding)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
         }
 
-       
-  if (isWallJumping)
-    {
-        float jumpDir = (moveInput > 0) ? -1 : 1;
+        // ⭐ Wall Jump Physics
+        if (isWallJumping)
+        {
+            float jumpDir = (moveInput > 0) ? 1 : -1;
 
-        rb.linearVelocity = new Vector2(
-            wallJumpDirection.x * jumpDir * wallJumpForce,
-            wallJumpDirection.y * wallJumpForce
-        );
-    }
-
-
+            rb.linearVelocity = new Vector2(
+                wallJumpDirection.x * jumpDir * wallJumpForce,
+                wallJumpDirection.y * wallJumpForce
+            );
+        }
     }
 
     private IEnumerator Dash()
@@ -161,12 +173,8 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-
-      
     }
 
- 
-    
     private void StopWallJump()
     {
         isWallJumping = false;
