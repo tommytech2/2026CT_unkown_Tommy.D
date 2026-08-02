@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // ⭐ FLIP ONLY THE GRAPHICS OBJECT ⭐
+   
         if (moveInput > 0)
         {
             graphics.localScale = new Vector3(
@@ -75,23 +75,23 @@ public class PlayerMovement : MonoBehaviour
             );
         }
 
-        // ⭐ Animator
-        animator.SetBool("isRunning", moveInput != 0);
+        
+        animator.SetBool("IsRunning", moveInput != 0);
 
-        // ⭐ Ground Check
+       
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // ⭐ DO NOT RETURN BEFORE INPUT HANDLING
+        
         if (isDashing) return;
         if (isWallJumping) return;
 
-        // ⭐ Jump
+        
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-        // ⭐ Dash
+    
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
