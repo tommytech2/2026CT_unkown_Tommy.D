@@ -1,25 +1,18 @@
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class SwordDamage : MonoBehaviour
 {
-    public Animator animator;
-    public GameObject swordHitbox;
+    public float damage = 25f;
 
-    void update()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (other.CompareTag("Enemy"))
         {
-            animator.SetTrigger("Attack");
+            EnemyHealth hp = other.GetComponent<EnemyHealth>();
+            if (hp != null)
+            {
+                hp.TakeDamage(damage);
+            }
         }
-    }
-
-    public void EnableHitbox()
-    {
-        swordHitbox.SetActive(true);
-    }
-
-    public void DisableHitbox()
-    {
-        swordHitbox.SetActive(false);
     }
 }

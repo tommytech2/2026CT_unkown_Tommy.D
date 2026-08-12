@@ -1,25 +1,37 @@
 using UnityEngine;
 
-public class sworddmg : MonoBehaviour
+public class Sword : MonoBehaviour
 {
-    public Animator animator;
-    public GameObject swordHitbox;
+    public float damageAmount = 25f;
+    public float attackCooldown = 0.5f;
+    private float lastAttackTime;
+    private Transform playerHand;
 
-    void Update()
+    void Start()
     {
-        if (Input.GetMouseButtonDown(0))
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
-            animator.SetTrigger("Attack");
+            playerHand = player.transform.Find("Hand");
+            if (playerHand != null)
+            {
+                transform.SetParent(playerHand);
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+            }
         }
     }
 
-    public void EnableHitbox()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        swordHitbox.SetActive(true);
-    }
-
-    public void DisableHitbox()
-    {
-        swordHitbox.SetActive(false);
+        if (other.CompareTag("Enemy") && Time.time > lastAttackTime + attackCooldown)
+        {
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damageAmount);
+                lastAttackTime = Time.time;
+            }
+        }
     }
 }
