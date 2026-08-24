@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform graphics;
 
     public Transform wallCheck;
-    public float wallCheckDistance = 0.5f;
+    public float wallCheckDistance = 1f;
     public LayerMask wallLayer;
     public float wallSlideSpeed = 2f;
     public Transform wallCheckLeft;
