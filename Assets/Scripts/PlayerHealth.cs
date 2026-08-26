@@ -4,18 +4,22 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+
+
+
 public class PlayerHealth : MonoBehaviour
 {
     public float Health;
     public float maxHealth;
     public Image healthBar;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
       maxHealth = Health;
     }
 
-    // Update is called once per frame
+
+   
     void Update()
      {
         if (Health <= 0)
@@ -23,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
             GameOver();
         }
     
+
     
     
     {
@@ -34,5 +39,33 @@ public class PlayerHealth : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+
+[SerializeField] Animator animator;
+
+     void TakeDamage(float amount)
+    {
+        Health -= amount;
+
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        animator.SetTrigger("Death");
+
+        
+        GetComponent<PlayerMovement>().enabled = false;
+
+    
+        GetComponent<Collider2D>().enabled = false;
+
+        
+
+
+    }
+     }
 }
-}
+

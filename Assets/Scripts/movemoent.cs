@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsRunning", moveInput != 0);
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        animator.SetBool("isGrounded", isGrounded);
+
+        
+
+
 
         if (isDashing) return;
         if (isWallJumping) return;
@@ -75,6 +80,13 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+       
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+        {
+            animator.SetTrigger("Roll");
+        }
+
+
 
         touchingRightWall = Physics2D.OverlapCircle(wallCheck.position, 0.3f, wallLayer);
         touchingLeftWall = Physics2D.OverlapCircle(wallCheckLeft.position, 0.3f, wallLayer);
@@ -95,6 +107,14 @@ public class PlayerMovement : MonoBehaviour
             isWallJumping = true;
             Invoke(nameof(StopWallJump), 0.2f);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            animator.SetTrigger("Jump");
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
+
+
     }
 
     void FixedUpdate()

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class SpikeDamage : MonoBehaviour
+public class UniversalPlayerDamage : MonoBehaviour
 {
-    public float damageAmount = 10f;
+    public float damageAmount = 20;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
