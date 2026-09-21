@@ -307,11 +307,8 @@ Free 2d cartoon parallax Background by CPasteGame: https://assetstore.unity.com/
 pixel Art Platformer Village props by Cainos:https://assetstore.unity.com/packages/2d/environments/pixel-art-platformer-village-props-166114
 
 ### 10.2 Audio Assets
-| Asset Name | Type | Creator / Source | Licence | URL | Used For |
-|---|---|---|---|---|---|
-| | | | | | |
-| | | | | | |
-| | | | | | |
+| Moonspire | Background music | alkakrab | [Licence](https://unity.com/legal/as-terms) | [URL](https://assetstore.unity.com/packages/audio/music/free-10-medieval-ambient-fantasy-tracks-music-pack-310781) | used for the background music in my game fitting the games theme |
+
 
 ### 10.3 Scripts & Code Snippets
 | Script / Snippet | Source | Licence | URL | Used For | Changes Made |
@@ -334,12 +331,9 @@ none
 ## 11. Challenges & Solutions
 
 | # | Challenge Encountered | How It Was Solved |
-|---|---|---|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
+Parallax background | I had several issues when coding my paralax backgroumd. It constantly wouldnt work with error messages poping up, the backgrounds moving too fast and texture bugs. It ended up taking me 4 lessons to complete my parallax background. The main issue i encountered was i was trying to do a looping parallax rather then an infinite one. I wasnt aware but an infinite parallax is much better suited for my poject so after i encountered too many issues with the looping parallax i switched styles and the debuging process not only was easier with the infinite parallax but it looks much better as well.
+
+Animation Controller | I had several issues with my animation controller, but the main one being since my multi teammate gave me sprites which werent the same size. This small minute detail in the controller being that sprites arent the same size and ratio ment the controller wouldnt animate at all. I went through the whole debug process of debuing the animator but only after i had tried everything did i realise the sprites were a different size. So i substituted in a sprite and animation from the unity asset store and the controller immediatley worked meaning that all i needed to change was a sprite after all.
 
 ---
 
