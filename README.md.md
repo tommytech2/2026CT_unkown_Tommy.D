@@ -2,13 +2,13 @@
 
 | Field | Detail |
 |---|---|
-| **Game Title** | |
-| **Student Name(s)** | |
-| **Class / Course** | |
-| **Repository** | |
-| **Unity Version** | |
-| **Document Version** | |
-| **Date** | |
+| **Game Title** |Knight Knock |
+| **Student Name(s)** |Tommy Dockrill, Daichi Mura |
+| **Class / Course** |Computer Technology |
+| **Repository** |2026CT_GameDesign_Ninja_Tommy.D |
+| **Unity Version** |6000.0.58f1
+| **Document Version** |0.1|
+| **Date** |27/8/26
 
 ---
 
@@ -29,21 +29,21 @@
 ---
 
 ## 1. Game Overview
+My game is a fun platformer game where you play as a Knight jumping from platfor to platform with various movement mechanics, killing any enemies you see along the way. My game has a pixelated art theme where you play as a medieval knight fighting futuristic enemies. You play in a forest That has an eary theme to it with weird blue shurb and forest in the distance. The players weapon of choice is the sword. It fits the game well leaving the player with something not too overpowered without feeling weak.
 
 ### 1.1 Genre
-
+My game is part of the platform genre. Since it is made in a 2d game engine you dont have to account for the extra axis of movement when making the game. This genre is known for its user friendly mechanics and ease of play due to its simple nature of having 2 movement axises. 
 
 ### 1.2 Target Audience
-
+My target audience is very large since my game isnt mature and doesnt feature any explicet content is child friendly.
+This means any age from 5 to 70 could play my game and even beyond that  and before if they posses video game skills, However the theme of my game being a platformer means it would appeal to gamers who enjoy games of this catagory. My platformer features basic moves which can be found in a lot so people with past expierence in this genre wont have difficulty picking up my mechanics.
 
 ### 1.3 Game Summary
 
 
 ### 1.4 Win / Loss Conditions
-| Condition | Description |
-|---|---|
-| Win | |
-| Loss | |
+Loss | players can die to spikes or enemies
+win | switching levels to kill enemies and experience game mechanics
 
 ### 1.5 Platform & Build Settings
 | Setting | Detail |
@@ -89,26 +89,35 @@
 ### 3.1 Core Mechanics
 | ID | Mechanic | Description | Implemented In (Script/Object) |
 |---|---|---|---|
-| M-1 | | | |
-| M-2 | | | |
-| M-3 | | | |
-| M-4 | | | |
-| M-5 | | | |
+| M-1: Player movement
+My player movement features a a wide range of ways to navigae levels. I have standard A.D movement with a jump on space. I also have a dash on shift. My player can also wall slide by letting go of the spacebar on a wall and then can get a second jump when it is in contact with a wall which is called a "wall jump."
+
+| M-2: Enemy
+I have 1 type of enemy in my game which features a dmg variable, has health and i can ajust both of these values in the unity interface. My enemy also features point A,B path finding where it will patrol between two specific points until the player gets within its vercinity which i can ajust with a value in unity.
+
+| M-3: Parallax Background
+My game features a infinite scroll parallax background which  never ends. It features 5 layers where they all move at their own individual speed which i can just in the unity hireachy. This gives emmersion and a sense of progression when the player is always seeing the background move.
+
+| M-4:Sword and Damge
+The player has a sword which is the weapon he uses to kill enemies. Its hitboxis slightly offset so it reaches out far enough to hit enemies. Its damage  is adjustable and so is the enemies health and damage it deals. The sword has an animation and hitbox so it can move and function normally like it would in any other game.
+
+| M-5: Spike
+i have added spikes as an obstacle which deals damage through the damage variable and has a customizeable damage integer. The spikes can be copied to place them anywhere in the level and can be stacked in a line to be a bigger obstacle. They feature a sprite which then has a hibox lining up with the top of the sprite allowing for no areas where damange can be taken without visable contact with the spike. 
 
 ### 3.2 Player Controls
 | Action | Input (Keyboard / Controller) | Description |
-|---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+A,D: Which is my left right movement so the player can move
+Shift: This key allows my player to dash which is a fast boost of movement which launches the player forward
+Space: This is my jump, wall slide and walljump key all in one which makes sense since all functions are related to jumping.
+left MB Click: This is my player sword attack button which allows my player to hit the enemy and deal dmg.
+1 button | this lets the player swap scenes to the next level.
+
 
 ### 3.3 Physics & Collision
 | Feature | Description |
-|---|---|
-| | |
-| | |
-| | |
+Wall Jump | Jump or hang or slide off walls|
+spikes| contact or stand on top of them to take damage
+gavity| takes player back down when jump\fall
 
 ### 3.4 Game Loop
 | Stage | Description |
@@ -118,37 +127,23 @@
 | Win / End State | |
 | Restart | |
 
-### 3.5 Scoring & Progression
-| Element | Description |
-|---|---|
-| Scoring System | |
-| Difficulty Progression | |
-| Unlockables / Levels | |
+
 
 ---
 
 ## 4. Visual Features
+Parallax background | creates depth effect for background
 
 ### 4.1 Particle Effects
 
 | Effect Name | Purpose | Screenshot |
-|---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+|Trail Renderer|The trial behind player when dash|---|
+
 
 > Add screenshot images using: `![Effect Name](./docs/screenshots/effect_name.png)`
 
 ---
 
-### 4.2 Cut Scenes & Cinematics
-
-| Cut Scene | Trigger | Description | Screenshot / Still |
-|---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
 
 > Add screenshot images using: `![Cut Scene Name](./docs/screenshots/cutscene_name.png)`
 
@@ -157,10 +152,14 @@
 ### 4.3 Animations
 
 | Animation | Object / Character | Description | Screenshot |
-|---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+Jump Anim | Player | shows the player visually jumping |
+Run anim | player | shows the player running| 
+idle anim | The players small movements when idle |
+Sword anim | The animation that players when the player attacks with the sowrd| 
+health anim| Hud | When the health of player goes down the health bar displays that|
+transition anim | fades from scene 1 to two when player presses 1 wanting to switch levels|
+
+
 
 > Add screenshot images using: `![Animation Name](./docs/screenshots/animation_name.png)`
 
@@ -168,23 +167,13 @@
 
 ### 4.4 Lighting & Post-Processing
 
-| Feature | Description | Screenshot |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+None
 
 > Add screenshot images using: `![Feature Name](./docs/screenshots/lighting_name.png)`
 
 ---
 
-### 4.5 Shaders & Materials
 
-| Shader / Material | Applied To | Description | Screenshot |
-|---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
 
 > Add screenshot images using: `![Shader Name](./docs/screenshots/shader_name.png)`
 
@@ -205,49 +194,29 @@
 
 ---
 
-## 5. Audio Design
+
 
 ### 5.1 Music
 | Track | Scene / Trigger | Source / Composer |
-|---|---|---|
-| | | |
-| | | |
+|Moonspire|Every scene|Unity Sset store:alkakrab| used as background music for entire game
 
-### 5.2 Sound Effects
-| Sound Effect | Trigger | Source |
-|---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
 
-### 5.3 Audio Implementation
-| Feature | Description |
-|---|---|
-| Audio Mixer / Groups | |
-| Spatial / 3D Audio | |
-| Dynamic Audio | |
 
----
-
-## 6. User Interface & HUD
 
 ### 6.1 HUD Elements
 | Element | Purpose | Screenshot |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+| Control hud| displayes the controls for the player to see which appear on the left of the scren
+| healthbar element | shows the health of the player |
+| Scene transition element | a hud element which tells the playerby pressing button 1 they move to a different level
+
 
 > Add screenshot images using: `![HUD Element](./docs/screenshots/hud_name.png)`
 
 ### 6.2 Menus
 | Menu | Purpose | Screenshot |
-|---|---|---|
-| Main Menu | | |
+Main menu hud | featured in the first scene where the player starts gives the options to play the game and start or to exit the game fully. Features game name and light up highlighting start and exit buttons with coresponding colours
 | Pause Menu | | |
-| Game Over Screen | | |
-| | | |
+
 
 > Add screenshot images using: `![Menu Name](./docs/screenshots/menu_name.png)`
 
@@ -257,27 +226,24 @@
 
 ### 7.1 Scene List
 | Scene Name | Purpose | Description |
-|---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+StartScene | is the menu scene for the game | Allows for the player to start or exit the game and means they dont have to jump straight into the action
+Scene1 | level 1 | is the first level of the game |
+scene2 | level 2 | is the second level of the game
 
 ### 7.2 Level / Environment Screenshots
 | Level / Area | Description | Screenshot |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+Level 1 | forest | A good entry level to introduce mechanics allowing for players to get used to mechanics |
+level 2 | forest | A harder version of level 1 which is more challenging requiring more effort and skills
+
 
 > Add screenshot images using: `![Level Name](./docs/screenshots/level_name.png)`
 
 ### 7.3 Scene Management
 | Feature | Description |
-|---|---|
-| Scene Loading Method | |
-| Persistent Data Between Scenes | |
-| Scene Transition Effects | |
+Main Menu | allows to exit the game and start and get sent to level 1
+Scene transition | my transition from level 1 to 2 is done by the player prssing Button 1 which is signaled by the hud which gives them the freedom to move from level to level
+| Scene Loading Method |Menu Button and keyboard button which allows for full freddom of game |
+| Scene Transition Effects |Fade in and out which is animated |
 
 ---
 
@@ -327,14 +293,18 @@
 
 ## 10. Third-Party Content Acknowledgements
 
-> All third-party assets (art, audio, fonts, scripts, packages) must be listed here with their licence. Using an asset without acknowledgement may constitute academic misconduct.
+Hero Knight - Pixel Art by sven Thole: https://assetstore.unity.com/packages/2d/characters/hero-knight-pixel-art-165188
 
 ### 10.1 Visual Assets
-| Asset Name | Type | Creator / Source | Licence | URL | Used For |
-|---|---|---|---|---|---|
-| | | | | | |
-| | | | | | |
-| | | | | | |
+Enemy galore pack by Admurin: https://assetstore.unity.com/packages/2d/characters/enemy-galore-1-pixel-art-208921
+Greek/Fanatasy Enemies by Potion junkies:https://assetstore.unity.com/packages/2d/characters/greek-fantasy-enemies-204779
+Animated Text Reveal by BitWave Labs: https://assetstore.unity.com/packages/2d/gui/animated-text-reveal-314861
+Pixel Art Woods Tileset and Backgrounds by Karsiorihttps://assetstore.unity.com/packages/2d/environments/pixel-art-woods-tileset-and-background-280066
+Hero Knight - Pixel Art by sven Thole: https://assetstore.unity.com/packages/2d/characters/hero-knight-pixel-art-165188
+2d Platform Tile Set - cave by Iphigenia pixels: https://assetstore.unity.com/packages/2d/environments/2d-platfrom-tile-set-cave-61672
+Free Pixel Art Kit By PolyMesh World :https://assetstore.unity.com/packages/2d/environments/free-pixel-art-kit-211149
+Free 2d cartoon parallax Background by CPasteGame: https://assetstore.unity.com/packages/p/free-2d-cartoon-parallax-background-205812
+pixel Art Platformer Village props by Cainos:https://assetstore.unity.com/packages/2d/environments/pixel-art-platformer-village-props-166114
 
 ### 10.2 Audio Assets
 | Asset Name | Type | Creator / Source | Licence | URL | Used For |
@@ -357,10 +327,7 @@
 | | | | | | |
 
 ### 10.5 Fonts
-| Font Name | Creator / Source | Licence | URL |
-|---|---|---|---|
-| | | | |
-| | | | |
+none
 
 ---
 

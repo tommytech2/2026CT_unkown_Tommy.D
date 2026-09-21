@@ -13,6 +13,10 @@ public class PlayerHealth : MonoBehaviour
     public float Health;
     public float maxHealth;
     public Image healthBar;
+    
+    
+    [SerializeField] private Animator animator;
+    
     void Start()
     {
       maxHealth = Health;
@@ -40,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-[SerializeField] Animator animator;
+
 
      void TakeDamage(float amount)
     {
