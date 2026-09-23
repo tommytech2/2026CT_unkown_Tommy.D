@@ -3304,15 +3304,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 625476767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4c366d8c59d1e346969b2ac8048df64, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d172dfe8c9d44a4bbb153846d0f3108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 625476771}
-  attackRange: 1
-  attackDamage: 25
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  swordHitbox: {fileID: 1161172874}
 --- !u!1 &633928856
 GameObject:
   m_ObjectHideFlags: 0

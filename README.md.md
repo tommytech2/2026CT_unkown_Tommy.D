@@ -145,9 +145,7 @@ Parallax background | creates depth effect for background
 ---
 
 
-> Add screenshot images using: `![Cut Scene Name](./docs/screenshots/cutscene_name.png)`
 
----
 
 ### 4.3 Animations
 
@@ -165,26 +163,7 @@ transition anim | fades from scene 1 to two when player presses 1 wanting to swi
 
 ---
 
-### 4.4 Lighting & Post-Processing
 
-None
-
-> Add screenshot images using: `![Feature Name](./docs/screenshots/lighting_name.png)`
-
----
-
-
-
-> Add screenshot images using: `![Shader Name](./docs/screenshots/shader_name.png)`
-
----
-
-### 4.6 Additional Visual Screenshots
-
-<!--
-  Add any other notable screenshots here.
-  Syntax: ![Description](./docs/screenshots/filename.png)
--->
 
 | Description | Screenshot |
 |---|---|
@@ -245,32 +224,42 @@ Scene transition | my transition from level 1 to 2 is done by the player prssing
 | Scene Loading Method |Menu Button and keyboard button which allows for full freddom of game |
 | Scene Transition Effects |Fade in and out which is animated |
 
----
+
 
 ## 8. Scripts & Programming
 
 ### 8.1 Script Summary
-| Script Name | Attached To | Responsibility |
-|---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+
+|Damage.cs|Attached to player, enemy, spike |Allows for damage to be dealt to player and enemy|
+|Enemy Health.cs |Attached toenemy|Allows for health of enemy so can take damage |
+|Enemy.cs |Attached to enemy |Allows for the movenet, player finding and patrol points so it can move |
+|Infinitescroll.cs |Attached to parallax backgrounds | Allows for them to move at different paces in relation to the player. Gives depth and sense of progress for player on how far they have moved. |
+|movement.cs |Attached to player |allows for movement and traversal of the platformer |
+|playerhealth.cs |attached to player | allows for player to have health different to enemy.|
+|PlayerSwing.cs |Attached to sword | enables the hitbox for sword and animation|
+|Sword.cs | Attached to sword | allows for damage and cooldown on sword object|
+|Camera_Movement | Attached to camera | allows for the player to be followed and gives a smooth movement affect.|
+Levle.cs | attached to 
+Menu_scripts.cs | 
+Music_manager.cs | 
+
+
+
 
 ### 8.2 Key Algorithms / Logic
 | Feature | Script | Description |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+|State-Driven Movement logic|Movement.cs|Allows for all movement abilities to be controled by specific movement states which prevenets conflics and allows for smooth transitions in anitions, mechanics and flow of movement.|
+|Cooldown Logic | Swing.cs "if (Time.time > lastAttackTime + attackCooldown)"|i designed a cooldown based weapon system meaning the player cant spam the dmg button allowig for fairer more balanced combat with better timing for the animation| |
+
 
 ### 8.3 Design Patterns Used
 | Pattern | Where Applied | Justification |
-|---|---|---|
-| | | |
-| | | |
-| | | |
+|layered movement control | Applied in the movement scrpit | The input processing update reads the inputs and then flips sprites to corresponding direction and checks ground and wall conditons. Then  a physics application under fixed update applies acceleration, deceleration and gravity and velocity. The last step is a coroutine which overrides gravity and velocity for the dash. This 3 step process is applied every time a movement key is pressed which prevents physics jitter and input conflicts. |
+|Dynamic Parenting system |Swing.cs
+ transform.SetParent(playerHand);
+transform.localPosition = Vector3.zero;
+transform.localRotation = Quaternion.identity;| Implamented a dynamic parenting systen where weapons attach to the correct player hand at the right time, ensuring consistent positioning across animation and character. |
+
 
 ---
 
@@ -279,15 +268,24 @@ Scene transition | my transition from level 1 to 2 is done by the player prssing
 > List every tutorial, course, video, or article that informed or guided your implementation. Include what you used it for and what you changed or adapted.
 
 | # | Title | Author / Creator | URL / Source | What You Used It For | What You Changed / Adapted |
-|---|---|---|---|---|---|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
-| 6 | | | | | |
-| 7 | | | | | |
-| 8 | | | | | |
+|Infinite Parallax Scrolling Background - Unity 2D Complete Tutorial
+|Game Code Library|https://www.youtube.com/watch?v=AoRBZh6HvIk|used in helping me create my parallax background| Follows player rather than camera   
+| 1 |Unity 2D PARALLAX EFFECT Tutorial | Endless Scrolling Background
+ |Rehope games | https://www.youtube.com/watch?v=ZYZfKbLxoHI | More in depth tutorial better suiting the method i used for parallax background | Used a multipler for the speed and used an offset to follow the player |
+| 2 |Code Class - 2d player movement in unity | AdamCYounis |https://www.youtube.com/watch?v=0-c3ErDzrh8 | Basis for wasd movement 
+| 3 |How To Wall Slide & Wall Jump In Unity
+ |Bendux |https://www.youtube.com/watch?v=O6VX6Ro7EtA |Used for the sliding mechanics and the base movmenet mechanics | Addded a wallcheck left and right status so can wall jump both directiosn more securly from other tutorial |
+| 4 |How to dash in unity |Bendux |https://www.youtube.com/watch?v=2kFGmuPHiA0 |Gave me a really good example of dashing code and taught me about the Ienumaerator tag and how that works |nothing dash is taken from this tutorial |
+| 5 |Wall Jumps and wall slides - 2D platformer Unity #4 | Game Code Library |https://www.youtube.com/watch?v=Pii-mmYlGgo | Gave me some great points to base wall jump and slide off | I used a velocity for my jump and combined dashing and jumping checks under the same private  Updates|
+| 6 |Simple 2D Enemy Patrolling Unity tutorial
+ |MoreBBlakeyyy |https://www.youtube.com/watch?v=RuvfOl8HhhM&t=150s |Used for patrol points  |Damange is tied to different script which controls damage for all damage inflicting elements in my game |
+| 7 |Damange System for Beginner -Learn Godot 4 - no talking |DevDrache |https://www.youtube.com/watch?v=ukmPHDLprEI |Used for my damange and health system across whole game. Spikes were taken from this tutorial and gave me inspo to add these into game. The scripts for both damage and health were used for player, enemy and spike from this tutorial
+| 8 |Start menu - 2D platformer untiy #28 | Game code library|https://www.youtube.com/watch?v=paaBTt5GcMU |Nothing was changed from this tutorial, game me a basic working start menu with highlihgting buttons and an option to close the game
+|How to make AWESOME Scene Transitions in Unity!| Brackeys| https://www.youtube.com/watch?v=CE9VOZivb3I | A really good tutorial that game me a fade in and out transition from menu to level and level to level. Nothing was changed |
+| How i added Lots of weapons to my Game | Bardent | https://www.youtube.com/watch?v=IPWTufDWUbs | Game me a good idea on how to implament a weapon, hand, and sword object under the player| 
+| How to Setup Animator and Animations in Unity 2D | Wild Cockatiel Games| https://www.youtube.com/watch?v=AdQz2wStdLY&t=276s | not only helped me create animations for movement but helped me understand the controller across the whole project allowing me to animate a sword swing and transitions| 
+MELLE COMBAT in Unity | Brackeys | https://www.youtube.com/watch?v=sPiVz1k-fEs | Gave me the code to implament into unity and for the sword to work. No changes were made.
+
 
 ---
 
@@ -358,27 +356,24 @@ Animation Controller | I had several issues with my animation controller, but th
 
 | Field | Detail |
 |---|---|
-| **Branch Name** |H branch |
-| **Feature Developed** | |
-| **Merged Into** | |
-| **Date Started** | |
-| **Date Merged** | |
+| **Branch Name** |Healthbar branch |
+| **Feature Developed** |Health bar |
+| **Merged Into** |Main Branch |
+| Merged on the 23/9/26 | 
 
 #### What Was Built
-<!-- Describe what this branch added or changed -->
+This branch started as being used for implamenting a healthbar but gradually became a feature branch. This branch was used to add in any new features that i wasnt sure i wanted to  have in my base game broken and main was left as a state of my game i was happy starting back from if the feature branch broke.
 
 #### Key Commits
 | Commit Message | What Changed |
-|---|---|
-| | |
-| | |
-| | |
+| WIP: Testing game movement/mechanics | This commit started the game movement mechanics, before this the player had no way of moving around| 
+| WIP:Parralax Background | This started the parallax background which would be a depth affect allowing the background to move at different paces depending on its depth
+| Parrallax-scripts | This commit was dedicated to getting the code for my parallax background working properly and debuging it. This process took a while due to my struggles with getting the parallax affect to work properly
+| Done:Parallax | this commit finished my parallax background and made it fully work. No bugs, error messages or other changes were made to my parallax after this point
+| DONE: Dash | i added in a dash movement mechanic due to my game lacking in unique movement features. It featured standard wasd and jump movement but needed something more skillful and unique.
+| WIP-enemy| In this commmit i was working on my enemy. Specifically its path finding where it has patrol points and its dmg variable. |
 
-#### Problems Encountered & Resolved
-| Problem | Resolution |
-|---|---|
-| | |
-| | |
+
 
 #### Screenshot / Evidence
 <!-- Add a screenshot of the feature working -->
