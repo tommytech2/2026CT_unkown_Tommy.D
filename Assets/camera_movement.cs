@@ -1,30 +1,33 @@
 using UnityEngine;
 
-namespace TommyGame.CameraSystem
+public class SmoothCamera2D : MonoBehaviour
 {
-    public class SmoothCameraFollow : MonoBehaviour
+    public Transform target;          // Player
+    public float smoothSpeed = 10f;   // Higher = smoother
+    public Vector3 offset;            // Camera offset from player
+
+    private Vector3 velocity = Vector3.zero;
+
+    void LateUpdate()
     {
-        public Transform target;       // your player
-        public float smoothSpeed = 10f;
-        public Vector3 offset;         // camera offset from player
+        if (target == null) return;
 
-        private Vector3 velocity = Vector3.zero;
+        // Desired camera position
+       Vector3 desiredPos = new Vector3(
+    target.position.x + offset.x,
+    transform.position.y,   // lock Y
+    transform.position.z
+);
 
-        void LateUpdate()
-        {
-            if (target == null) return;
 
-            Vector3 desiredPos = target.position + offset;
+        // Smooth movement
+        Vector3 smoothedPos = Vector3.SmoothDamp(
+            transform.position,
+            desiredPos,
+            ref velocity,
+            1f / smoothSpeed
+        );
 
-            // Smooth damp = buttery smooth movement
-            Vector3 smoothedPos = Vector3.SmoothDamp(
-                transform.position,
-                desiredPos,
-                ref velocity,
-                1f / smoothSpeed
-            );
-
-            transform.position = smoothedPos;
-        }
+        transform.position = smoothedPos;
     }
 }

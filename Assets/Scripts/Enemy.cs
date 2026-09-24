@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy2D : MonoBehaviour
@@ -49,24 +50,38 @@ public class Enemy2D : MonoBehaviour
         else
             sr.flipX = true;
 
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f)
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.3f)
+    {
+         StartCoroutine(SwitchTarget());
+    }
+
+   
+
+    }
+
+            private void ChasePlayer()
         {
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                player.position,
+                speed * Time.deltaTime
+            );
+
+            if (player.position.x > transform.position.x)
+                sr.flipX = false;
+            else
+                sr.flipX = true;
+        }
+
+        // ← your coroutine MUST be OUTSIDE all other methods
+        private IEnumerator SwitchTarget()
+        {
+            yield return new WaitForSeconds(0.1f);
             currentTarget = (currentTarget == pointA) ? pointB : pointA;
         }
-    }
+     }
 
-    private void ChasePlayer()
-    {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            player.position,
-            speed * Time.deltaTime
-        );
 
-        // Flip sprite toward player
-        if (player.position.x > transform.position.x)
-            sr.flipX = false;
-        else
-            sr.flipX = true;
-    }
-}
+
+
+
